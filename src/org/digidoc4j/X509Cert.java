@@ -99,8 +99,13 @@ public class X509Cert implements Serializable {
   X509Cert(String path) throws CertificateException, IOException {
     logger.debug("");
     CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-    try (FileInputStream inStream = new FileInputStream(new File(path))) {
+
+    FileInputStream inStream = null;
+    try  {
+      inStream = new FileInputStream(new File(path));
       originalCert = (X509Certificate) certificateFactory.generateCertificate(inStream);
+    } finally {
+      if (inStream != null) inStream.close();
     }
     logger.debug("Certificate created from path: " + path);
   }
@@ -114,7 +119,7 @@ public class X509Cert implements Serializable {
   public List<String> getCertificatePolicies() throws IOException {
     logger.debug("");
     byte[] extensionValue = originalCert.getExtensionValue("2.5.29.32");
-    List<String> policies = new ArrayList<>();
+    List<String> policies = new ArrayList<String>();
 
     byte[] octets = ((DEROctetString) DEROctetString.fromByteArray(extensionValue)).getOctets();
     ASN1Sequence sequence = (ASN1Sequence) ASN1Sequence.fromByteArray(octets);
@@ -161,7 +166,7 @@ public class X509Cert implements Serializable {
   private void loadIssuerParts() {
     logger.debug("");
     String[] parts = StringUtils.split(issuerName(), ',');
-    issuerPartMap = new HashMap<>();
+    issuerPartMap = new HashMap<String, String>();
     for (String part : parts) {
       String[] strings = StringUtils.split(part, "=");
       String key = strings[0].trim();
@@ -221,7 +226,7 @@ public class X509Cert implements Serializable {
    */
   public List<KeyUsage> getKeyUsages() {
     logger.debug("");
-    List<KeyUsage> keyUsages = new ArrayList<>();
+    List<KeyUsage> keyUsages = new ArrayList<KeyUsage>();
     boolean[] keyUsagesBits = originalCert.getKeyUsage();
     for (int i = 0; i < keyUsagesBits.length; i++) {
       if (keyUsagesBits[i]) {
@@ -268,7 +273,7 @@ public class X509Cert implements Serializable {
   private void loadSubjectNameParts() {
     logger.debug("");
     String[] parts = getSubjectName().split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-    subjectNamePartMap = new HashMap<>();
+    subjectNamePartMap = new HashMap<String, String>();
     for (String part : parts) {
       String[] strings = part.split("=(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
       String key = strings[0].trim();

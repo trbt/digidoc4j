@@ -166,10 +166,10 @@ public class Configuration implements Serializable {
   private final Mode mode;
   private LinkedHashMap configurationFromFile;
   private String configurationInputSourceName;
-  private Hashtable<String, String> jDigiDocConfiguration = new Hashtable<>();
-  private ArrayList<String> inputSourceParseErrors = new ArrayList<>();
+  private Hashtable<String, String> jDigiDocConfiguration = new Hashtable<String, String>();
+  private ArrayList<String> inputSourceParseErrors = new ArrayList<String>();
   private TslManager tslManager;
-  Map<String, String> configuration = new HashMap<>();
+  Map<String, String> configuration = new HashMap<String, String>();
 
   private String httpProxyHost;
   private Integer httpProxyPort;
@@ -420,7 +420,7 @@ public class Configuration implements Serializable {
   private Hashtable<String, String> mapToJDigiDocConfiguration() {
     logger.debug("loading JDigiDoc configuration");
 
-    inputSourceParseErrors = new ArrayList<>();
+    inputSourceParseErrors = new ArrayList<String>();
 
     loadInitialConfigurationValues();
     reportFileParseErrors();

@@ -51,8 +51,8 @@ public class XadesSignatureValidator implements SignatureValidator {
   private static final String XADES_SIGNED_PROPERTIES = "http://uri.etsi.org/01903#SignedProperties";
   private transient Reports validationReport;
   private transient SimpleReport simpleReport;
-  private List<DigiDoc4JException> validationErrors = new ArrayList<>();
-  private List<DigiDoc4JException> validationWarnings = new ArrayList<>();
+  private List<DigiDoc4JException> validationErrors = new ArrayList<DigiDoc4JException>();
+  private List<DigiDoc4JException> validationWarnings = new ArrayList<DigiDoc4JException>();
   private String signatureId;
   private XadesSignature signature;
 

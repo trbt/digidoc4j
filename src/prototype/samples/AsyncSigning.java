@@ -77,8 +77,12 @@ public class AsyncSigning {
       public byte[] sign(DigestAlgorithm digestAlgorithm, byte[] dataToSign) {
         try {
           KeyStore keyStore = KeyStore.getInstance("PKCS12");
-          try (FileInputStream stream = new FileInputStream("testFiles/signout.p12")) {
+          FileInputStream stream = null;
+          try {
+            stream = new FileInputStream("testFiles/signout.p12");
             keyStore.load(stream, "test".toCharArray());
+          } finally {
+            if (stream != null) stream.close();
           }
           PrivateKey privateKey = (PrivateKey) keyStore.getKey("1", "test".toCharArray());
           final String javaSignatureAlgorithm = "NONEwith" + privateKey.getAlgorithm();
@@ -101,8 +105,12 @@ public class AsyncSigning {
   private static X509Certificate getSignerCert() {
     try {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
-      try (FileInputStream stream = new FileInputStream("testFiles/signout.p12")) {
+      FileInputStream stream = null;
+      try {
+        stream = new FileInputStream("testFiles/signout.p12");
         keyStore.load(stream, "test".toCharArray());
+      } finally {
+        if (stream != null) stream.close();
       }
       return (X509Certificate) keyStore.getCertificate("1");
     } catch (Exception e) {

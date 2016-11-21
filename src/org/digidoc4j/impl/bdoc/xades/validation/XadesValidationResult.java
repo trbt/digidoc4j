@@ -29,7 +29,7 @@ public class XadesValidationResult {
   }
 
   public Map<String, SimpleReport> extractSimpleReports() {
-    Map<String, SimpleReport> simpleReports = new LinkedHashMap<>();
+    Map<String, SimpleReport> simpleReports = new LinkedHashMap<String, SimpleReport>();
     do {
       SimpleReport simpleReport = validationReport.getSimpleReport();
       if (simpleReport.getSignatureIdList().size() > 0) {

@@ -65,7 +65,7 @@ public class BDocValidationReportBuilder {
   }
 
   private List<SignatureValidationReport> createSignaturesValidationReport() {
-    List<SignatureValidationReport> signaturesReport = new ArrayList<>();
+    List<SignatureValidationReport> signaturesReport = new ArrayList<SignatureValidationReport>();
     for (SignatureValidationData validationData : signatureValidationData) {
       SignatureValidationReport signatureValidationReport = SignatureValidationReportCreator.create(validationData);
       signaturesReport.add(signatureValidationReport);
@@ -94,7 +94,7 @@ public class BDocValidationReportBuilder {
   }
 
   private List<String> createContainerErrors() {
-    List<String> containerErrors = new ArrayList<>();
+    List<String> containerErrors = new ArrayList<String>();
     for (DigiDoc4JException manifestError : manifestErrors) {
       containerErrors.add(manifestError.getMessage());
     }

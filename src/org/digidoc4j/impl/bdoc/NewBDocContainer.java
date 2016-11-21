@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
 public class NewBDocContainer extends BDocContainer {
 
   private static final Logger logger = LoggerFactory.getLogger(NewBDocContainer.class);
-  private List<Signature> signatures = new ArrayList<>();
-  private List<DataFile> dataFiles = new ArrayList<>();
+  private List<Signature> signatures = new ArrayList<Signature>();
+  private List<DataFile> dataFiles = new ArrayList<DataFile>();
 
   public NewBDocContainer() {
   }

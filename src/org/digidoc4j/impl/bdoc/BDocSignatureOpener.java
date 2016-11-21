@@ -38,7 +38,7 @@ public class BDocSignatureOpener {
 
   public List<BDocSignature> parse(DSSDocument xadesDocument) {
     logger.debug("Parsing xades document");
-    List<BDocSignature> signatures = new ArrayList<>(1);
+    List<BDocSignature> signatures = new ArrayList<BDocSignature>(1);
     BDocSignature bDocSignature = createBDocSignature(xadesDocument);
     signatures.add(bDocSignature);
     return signatures;

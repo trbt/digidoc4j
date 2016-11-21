@@ -18,9 +18,9 @@ import org.digidoc4j.exceptions.DigiDoc4JException;
 
 public class BDocValidationResult implements ValidationResult {
 
-  private List<DigiDoc4JException> errors = new ArrayList<>();
-  private List<DigiDoc4JException> warnings = new ArrayList<>();
-  private List<DigiDoc4JException> containerErrorsOnly = new ArrayList<>();
+  private List<DigiDoc4JException> errors = new ArrayList<DigiDoc4JException>();
+  private List<DigiDoc4JException> warnings = new ArrayList<DigiDoc4JException>();
+  private List<DigiDoc4JException> containerErrorsOnly = new ArrayList<DigiDoc4JException>();
   private BDocValidationReportBuilder reportBuilder;
 
   @Override

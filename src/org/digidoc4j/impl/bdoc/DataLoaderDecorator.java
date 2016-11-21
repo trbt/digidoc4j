@@ -80,7 +80,7 @@ public class DataLoaderDecorator {
 
   public static class HashMapProxyDao implements ProxyDao {
 
-    private Map<ProxyKey, ProxyPreference> values = new HashMap<>();
+    private Map<ProxyKey, ProxyPreference> values = new HashMap<ProxyKey, ProxyPreference>();
 
     @Override
     public ProxyPreference get(ProxyKey id) {

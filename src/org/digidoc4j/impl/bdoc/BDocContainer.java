@@ -106,7 +106,7 @@ public abstract class BDocContainer implements Container {
   protected List<Signature> parseSignatureFiles(List<DSSDocument> signatureFiles, List<DSSDocument> detachedContents) {
     Configuration configuration = getConfiguration();
     BDocSignatureOpener signatureOpener = new BDocSignatureOpener(detachedContents, configuration);
-    List<Signature> signatures = new ArrayList<>(signatureFiles.size());
+    List<Signature> signatures = new ArrayList<Signature>(signatureFiles.size());
     for (DSSDocument signatureFile : signatureFiles) {
       List<BDocSignature> bDocSignatures = signatureOpener.parse(signatureFile);
       signatures.addAll(bDocSignatures);

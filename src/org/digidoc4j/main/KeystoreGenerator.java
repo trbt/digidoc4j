@@ -48,7 +48,8 @@ public class KeystoreGenerator {
           .withCertificateDirectory(TEST_KEYSTORE_CERTIFICATES_FILEPATH)
           .withKeyStoreFilepath(TEST_KEYSTORE_FILEPATH)
           .generateKeystore();
-    } catch (CertificateException | NoSuchAlgorithmException | IOException | KeyStoreException e) {
+//    } catch (CertificateException | NoSuchAlgorithmException | IOException | KeyStoreException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }

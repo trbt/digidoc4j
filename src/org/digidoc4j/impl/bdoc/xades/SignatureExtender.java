@@ -47,15 +47,15 @@ import eu.europa.esig.dss.x509.ocsp.OCSPSource;
 public class SignatureExtender {
 
   private static final Logger logger = LoggerFactory.getLogger(SignatureExtender.class);
-  private static final Map<SignatureProfile, Set<SignatureProfile>> possibleExtensions = new HashMap<>(5);
+  private static final Map<SignatureProfile, Set<SignatureProfile>> possibleExtensions = new HashMap<SignatureProfile, Set<SignatureProfile>>(5);
   private Configuration configuration;
   private DSSDocument detachedContent;
   private XadesSigningDssFacade extendingFacade;
 
   static {
-    possibleExtensions.put(B_BES, new HashSet<>(asList(LT, LTA)));
-    possibleExtensions.put(B_EPES, new HashSet<>(singletonList(LT_TM)));
-    possibleExtensions.put(LT, new HashSet<>(singletonList(LTA)));
+    possibleExtensions.put(B_BES, new HashSet<SignatureProfile>(asList(LT, LTA)));
+    possibleExtensions.put(B_EPES, new HashSet<SignatureProfile>(singletonList(LT_TM)));
+    possibleExtensions.put(LT, new HashSet<SignatureProfile>(singletonList(LTA)));
     possibleExtensions.put(LT_TM, Collections.<SignatureProfile>emptySet());
     possibleExtensions.put(LTA, Collections.<SignatureProfile>emptySet());
   }
@@ -70,7 +70,7 @@ public class SignatureExtender {
     logger.debug("Extending signatures to " + profile);
     validatePossibilityToExtendTo(signaturesToExtend, profile);
     prepareExtendingFacade(profile);
-    List<DSSDocument> extendedSignatures = new ArrayList<>();
+    List<DSSDocument> extendedSignatures = new ArrayList<DSSDocument>();
     for (Signature signature : signaturesToExtend) {
       DSSDocument extendedSignature = extendSignature((BDocSignature) signature, profile);
       extendedSignatures.add(extendedSignature);

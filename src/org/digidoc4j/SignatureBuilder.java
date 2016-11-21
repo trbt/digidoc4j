@@ -61,7 +61,7 @@ public abstract class SignatureBuilder implements Serializable {
   protected SignatureParameters signatureParameters = new SignatureParameters();
   protected SignatureToken signatureToken;
   protected Container container;
-  protected static Map<String, Class<? extends SignatureBuilder>> customSignatureBuilders = new HashMap<>();
+  protected static Map<String, Class<? extends SignatureBuilder>> customSignatureBuilders = new HashMap<String, Class<? extends SignatureBuilder>>();
 
   /**
    * Create a new signature builder based on a container.

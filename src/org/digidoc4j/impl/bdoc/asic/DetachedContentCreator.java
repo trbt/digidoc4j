@@ -25,7 +25,7 @@ public class DetachedContentCreator {
   private List<DSSDocument> detachedContentList;
 
   public DetachedContentCreator populate(Collection<DataFile> dataFiles) {
-    detachedContentList = new ArrayList<>(dataFiles.size());
+    detachedContentList = new ArrayList<DSSDocument>(dataFiles.size());
     if(dataFiles.isEmpty()) {
       return this;
     }

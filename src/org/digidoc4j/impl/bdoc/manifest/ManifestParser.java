@@ -44,7 +44,7 @@ public class ManifestParser implements Serializable {
     if(!containsManifestFile()) {
       return Collections.emptyMap();
     }
-    entries = new HashMap<>();
+    entries = new HashMap<String, ManifestEntry>();
     loadFileEntriesFromManifest();
     return entries;
   }

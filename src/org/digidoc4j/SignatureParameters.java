@@ -32,7 +32,7 @@ import java.util.List;
 public class SignatureParameters implements Serializable {
   private final static Logger logger = LoggerFactory.getLogger(SignatureParameters.class);
   private SignatureProductionPlace productionPlace = new SignatureProductionPlace();
-  private List<String> roles = new ArrayList<>();
+  private List<String> roles = new ArrayList<String>();
   private String signatureId;
   private DigestAlgorithm digestAlgorithm;
   private EncryptionAlgorithm encryptionAlgorithm;

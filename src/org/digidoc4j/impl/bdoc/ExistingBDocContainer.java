@@ -37,10 +37,10 @@ import eu.europa.esig.dss.DSSDocument;
 public class ExistingBDocContainer extends BDocContainer {
 
   private static final Logger logger = LoggerFactory.getLogger(ExistingBDocContainer.class);
-  private List<Signature> newSignatures = new ArrayList<>();
-  private List<Signature> allSignatures = new ArrayList<>();
-  private List<DataFile> allDataFiles = new ArrayList<>();
-  private List<DataFile> newDataFiles = new ArrayList<>();
+  private List<Signature> newSignatures = new ArrayList<Signature>();
+  private List<Signature> allSignatures = new ArrayList<Signature>();
+  private List<DataFile> allDataFiles = new ArrayList<DataFile>();
+  private List<DataFile> newDataFiles = new ArrayList<DataFile>();
   private AsicParseResult containerParseResult;
   private boolean dataFilesHaveChanged;
 
@@ -75,7 +75,7 @@ public class ExistingBDocContainer extends BDocContainer {
     removeAllExistingSignaturesFromContainer();
     List<Signature> signatures = extendAllSignaturesProfile(profile, allSignatures, allDataFiles);
     allSignatures = signatures;
-    newSignatures = new ArrayList<>(signatures);
+    newSignatures = new ArrayList<Signature>(signatures);
   }
 
   @Override

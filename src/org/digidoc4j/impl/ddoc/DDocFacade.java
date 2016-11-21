@@ -60,7 +60,7 @@ public class DDocFacade implements SignatureFinalizer, Serializable {
   private static final Logger logger = LoggerFactory.getLogger(DDocFacade.class);
 
   SignedDoc ddoc;
-  private ArrayList<DigiDocException> openContainerExceptions = new ArrayList<>();
+  private ArrayList<DigiDocException> openContainerExceptions = new ArrayList<DigiDocException>();
   private SignatureProfile signatureProfile = SignatureProfile.LT_TM;
   private SignatureParameters signatureParameters = new SignatureParameters();
   protected ee.sk.digidoc.Signature ddocSignature;
@@ -186,7 +186,10 @@ public class DDocFacade implements SignatureFinalizer, Serializable {
       dataFile.setBody(data);
       ddoc.addDataFile(dataFile);
       return new DataFile(is, fileName, mimeType);
-    } catch (DigiDocException | IOException e) {
+    } catch (DigiDocException e) {
+      logger.error(e.getMessage());
+      throw new DigiDoc4JException(e);
+    } catch (IOException e) {
       logger.error(e.getMessage());
       throw new DigiDoc4JException(e);
     }
@@ -215,7 +218,7 @@ public class DDocFacade implements SignatureFinalizer, Serializable {
 
   public List<DataFile> getDataFiles() {
     logger.debug("");
-    List<DataFile> dataFiles = new ArrayList<>();
+    List<DataFile> dataFiles = new ArrayList<DataFile>();
     ArrayList ddocDataFiles = ddoc.getDataFiles();
     if (ddocDataFiles == null) return dataFiles;
     for (Object ddocDataFile : ddocDataFiles) {
@@ -350,7 +353,7 @@ public class DDocFacade implements SignatureFinalizer, Serializable {
 
   public List<Signature> getSignatures() {
     logger.debug("");
-    List<Signature> signatures = new ArrayList<>();
+    List<Signature> signatures = new ArrayList<Signature>();
 
     ArrayList dDocSignatures = ddoc.getSignatures();
 

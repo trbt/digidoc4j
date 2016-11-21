@@ -48,13 +48,13 @@ public abstract class AsicContainerParser {
   private static final Pattern SIGNATURE_FILE_ENDING_PATTERN = Pattern.compile("(\\d+).xml");
   public static final String MANIFEST = "META-INF/manifest.xml";
   private AsicParseResult parseResult = new AsicParseResult();
-  private List<DSSDocument> signatures = new ArrayList<>();
-  private LinkedHashMap<String, DataFile> dataFiles = new LinkedHashMap<>();
-  private List<DSSDocument> detachedContents = new ArrayList<>();
+  private List<DSSDocument> signatures = new ArrayList<DSSDocument>();
+  private LinkedHashMap<String, DataFile> dataFiles = new LinkedHashMap<String, DataFile>();
+  private List<DSSDocument> detachedContents = new ArrayList<DSSDocument>();
   private Integer currentSignatureFileIndex;
   private String mimeType;
   private String zipFileComment;
-  private List<AsicEntry> asicEntries = new ArrayList<>();
+  private List<AsicEntry> asicEntries = new ArrayList<AsicEntry>();
   private Map<String, ManifestEntry> manifestFileItems = Collections.emptyMap();
   private ManifestParser manifestParser;
   private boolean storeDataFilesOnlyInMemory;
@@ -193,7 +193,7 @@ public abstract class AsicContainerParser {
 
   private void populateParseResult() {
     Collection<DataFile> files = dataFiles.values();
-    parseResult.setDataFiles(new ArrayList<>(files));
+    parseResult.setDataFiles(new ArrayList<DataFile>(files));
     parseResult.setSignatures(signatures);
     parseResult.setCurrentUsedSignatureFileIndex(currentSignatureFileIndex);
     parseResult.setDetachedContents(detachedContents);

@@ -38,7 +38,7 @@ public class DDocOpener implements Serializable {
   public DDocContainer open(String fileName, Configuration configuration) {
     logger.info("Opening DDoc container from file: " + fileName);
     DDocFacade facade = new DDocFacade(configuration);
-    ArrayList<DigiDocException> containerOpeningExceptions = new ArrayList<>();
+    ArrayList<DigiDocException> containerOpeningExceptions = new ArrayList<DigiDocException>();
     SignedDoc signedDoc = openSignedDoc(fileName, containerOpeningExceptions);
     validateOpenedContainerExceptions(containerOpeningExceptions);
     facade.setContainerOpeningExceptions(containerOpeningExceptions);

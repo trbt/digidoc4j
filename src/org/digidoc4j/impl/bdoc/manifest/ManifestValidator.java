@@ -61,9 +61,9 @@ public class ManifestValidator {
       logger.error(errorMessage);
       throw new DigiDoc4JException(errorMessage);
     }
-    List<String> errorMessages = new ArrayList<>();
+    List<String> errorMessages = new ArrayList<String>();
     Map<String, ManifestEntry> manifestEntries = manifestParser.getManifestFileItems();
-    Set<ManifestEntry> signatureEntries = new HashSet<>();
+    Set<ManifestEntry> signatureEntries = new HashSet<ManifestEntry>();
 
     for (Signature signature : signatures) {
       signatureEntries = getSignatureEntries((BDocSignature) signature);
@@ -79,7 +79,7 @@ public class ManifestValidator {
 
   private List<String> validateFilesInContainer(Set<ManifestEntry> signatureEntries) {
     logger.debug("");
-    ArrayList<String> errorMessages = new ArrayList<>();
+    ArrayList<String> errorMessages = new ArrayList<String>();
 
     if (signatureEntries.size() == 0)
       return errorMessages;
@@ -96,7 +96,7 @@ public class ManifestValidator {
   }
 
   private Set<String> getFileNamesFromManifestEntrySet(Set<ManifestEntry> signatureEntries) {
-    Set<String> signatureEntriesFileNames = new HashSet<>(signatureEntries.size());
+    Set<String> signatureEntriesFileNames = new HashSet<String>(signatureEntries.size());
 
 
     for (ManifestEntry entry : signatureEntries) {
@@ -109,7 +109,7 @@ public class ManifestValidator {
   static List<String> validateEntries(Map<String, ManifestEntry> manifestEntries, Set<ManifestEntry> signatureEntries,
                                       String signatureId) {
     logger.debug("");
-    ArrayList<String> errorMessages = new ArrayList<>();
+    ArrayList<String> errorMessages = new ArrayList<String>();
 
     if (signatureEntries.size() == 0)
       return errorMessages;
@@ -155,7 +155,7 @@ public class ManifestValidator {
   }
 
   private Set<ManifestEntry> getSignatureEntries(BDocSignature signature) {
-    Set<ManifestEntry> signatureEntries = new HashSet<>();
+    Set<ManifestEntry> signatureEntries = new HashSet<ManifestEntry>();
     List<Reference> references = signature.getOrigin().getReferences();
     for (Reference reference : references) {
       if (reference.getType().equals("")) {
@@ -192,7 +192,7 @@ public class ManifestValidator {
     }
 
   private List<String> getFilesInContainer() {
-    List<String> fileEntries = new ArrayList<>();
+    List<String> fileEntries = new ArrayList<String>();
 
     List<String> signatureFileNames = getSignatureFileNames();
 
@@ -207,7 +207,7 @@ public class ManifestValidator {
   }
 
   private List<String> getSignatureFileNames() {
-    List<String> signatureFileNames = new ArrayList<>();
+    List<String> signatureFileNames = new ArrayList<String>();
     for (Signature signature :signatures) {
       String signatureFileName = "META-INF/signature" + signature.getId().toLowerCase() + ".xml";
 

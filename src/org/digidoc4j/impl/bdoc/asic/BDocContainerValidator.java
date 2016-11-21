@@ -39,11 +39,11 @@ import eu.europa.esig.dss.DSSDocument;
 public class BDocContainerValidator implements Serializable {
 
   private final static Logger logger = LoggerFactory.getLogger(BDocContainerValidator.class);
-  private List<DigiDoc4JException> errors = new ArrayList<>();
-  private List<DigiDoc4JException> warnings = new ArrayList<>();
+  private List<DigiDoc4JException> errors = new ArrayList<DigiDoc4JException>();
+  private List<DigiDoc4JException> warnings = new ArrayList<DigiDoc4JException>();
   private AsicParseResult containerParseResult;
   private boolean validateManifest;
-  private List<SignatureValidationData> signatureValidationData = new ArrayList<>();
+  private List<SignatureValidationData> signatureValidationData = new ArrayList<SignatureValidationData>();
   private List<DigiDoc4JException> manifestErrors;
   private ThreadPoolManager threadPoolManager;
 
@@ -73,7 +73,7 @@ public class BDocContainerValidator implements Serializable {
   }
 
   private List<Future<SignatureValidationData>> startSignatureValidationInParallel(List<Signature> signatures) {
-    List<Future<SignatureValidationData>> futures = new ArrayList<>();
+    List<Future<SignatureValidationData>> futures = new ArrayList<Future<SignatureValidationData>>();
     for (Signature signature : signatures) {
       SignatureValidationTask validationExecutor = new SignatureValidationTask(signature);
       Future<SignatureValidationData> validationDataFuture = threadPoolManager.submit(validationExecutor);
@@ -88,7 +88,10 @@ public class BDocContainerValidator implements Serializable {
       try {
         SignatureValidationData validationData = validationFuture.get();
         extractSignatureErrors(validationData);
-      } catch (InterruptedException | ExecutionException e) {
+      } catch (InterruptedException e) {
+        logger.error("Error validating signatures on multiple threads: " + e.getMessage());
+        throw new TechnicalException("Error validating signatures on multiple threads: " + e.getMessage(), e);
+      } catch (ExecutionException e) {
         logger.error("Error validating signatures on multiple threads: " + e.getMessage());
         throw new TechnicalException("Error validating signatures on multiple threads: " + e.getMessage(), e);
       }
@@ -131,11 +134,11 @@ public class BDocContainerValidator implements Serializable {
     ManifestParser manifestParser = containerParseResult.getManifestParser();
     if (manifestParser == null || !manifestParser.containsManifestFile()) {
       logger.error("Container is missing manifest.xml");
-      List<DigiDoc4JException> manifestExceptions = new ArrayList<>();
+      List<DigiDoc4JException> manifestExceptions = new ArrayList<DigiDoc4JException>();
       manifestExceptions.add(new UnsupportedFormatException("Container does not contain a manifest file"));
       return manifestExceptions;
     }
-    List<DigiDoc4JException> manifestExceptions = new ArrayList<>();
+    List<DigiDoc4JException> manifestExceptions = new ArrayList<DigiDoc4JException>();
     List<DSSDocument> detachedContents = containerParseResult.getDetachedContents();
     List<String> manifestErrors = new ManifestValidator(manifestParser, detachedContents, signatures).validateDocument();
     for (String manifestError : manifestErrors) {

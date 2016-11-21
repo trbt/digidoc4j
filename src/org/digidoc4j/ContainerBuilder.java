@@ -51,9 +51,9 @@ public abstract class ContainerBuilder {
 
   public static final String BDOC_CONTAINER_TYPE = "BDOC";
   public static final String DDOC_CONTAINER_TYPE = "DDOC";
-  protected static Map<String, Class<? extends Container>> containerImplementations = new HashMap<>();
+  protected static Map<String, Class<? extends Container>> containerImplementations = new HashMap<String, Class<? extends Container>>();
   protected Configuration configuration;
-  protected List<ContainerDataFile> dataFiles = new ArrayList<>();
+  protected List<ContainerDataFile> dataFiles = new ArrayList<ContainerDataFile>();
   protected String containerFilePath;
   protected InputStream containerInputStream;
 
@@ -77,12 +77,18 @@ public abstract class ContainerBuilder {
     if (isCustomContainerType(containerType)) {
       return new CustomContainerBuilder(containerType);
     }
-    switch (containerType) {
+    if (BDOC_CONTAINER_TYPE.equalsIgnoreCase(containerType))
+      return new BDocContainerBuilder();
+    else if (DDOC_CONTAINER_TYPE.equalsIgnoreCase(containerType))
+      return new DDocContainerBuilder();
+
+/*    switch (containerType) {
       case BDOC_CONTAINER_TYPE:
         return new BDocContainerBuilder();
       case DDOC_CONTAINER_TYPE:
         return new DDocContainerBuilder();
     }
+*/
     throw new NotSupportedException("Container type is not supported: " + containerType);
   }
 

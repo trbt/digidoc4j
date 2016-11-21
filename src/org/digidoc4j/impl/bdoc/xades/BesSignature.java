@@ -223,7 +223,7 @@ public class BesSignature extends DssXadesSignature {
   }
 
   protected Set<CertificateToken> findCertificates(String xPath) {
-    Set<CertificateToken> certificates = new HashSet<>();
+    Set<CertificateToken> certificates = new HashSet<CertificateToken>();
     NodeList nodeList = DSSXMLUtils.getNodeList(signatureElement, xPath);
     for (int i = 0; i < nodeList.getLength(); i++) {
       Element certificateElement = (Element) nodeList.item(i);

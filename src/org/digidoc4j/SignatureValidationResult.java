@@ -18,8 +18,8 @@ import org.digidoc4j.exceptions.DigiDoc4JException;
 
 public class SignatureValidationResult implements Serializable {
 
-  private List<DigiDoc4JException> errors = new ArrayList<>();
-  private List<DigiDoc4JException> warnings = new ArrayList<>();
+  private List<DigiDoc4JException> errors = new ArrayList<DigiDoc4JException>();
+  private List<DigiDoc4JException> warnings = new ArrayList<DigiDoc4JException>();
 
   public boolean isValid() {
     return errors.isEmpty();

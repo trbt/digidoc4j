@@ -80,12 +80,45 @@
         <exclude name="logback.xml/"/>
       </fileset>
     </copy>
-    <javac destdir="${build.dir}" includeantruntime="false" source="1.6" debug="on" target="1.6" encoding="UTF-8">
+    <javac destdir="${build.dir}" includeantruntime="false" source="1.7" debug="on" target="1.7" encoding="UTF-8">
       <src path="src"/>
-<!--      <src path="test"/> -->
+      <src path="test"/>
       <classpath refid="${classpath}"/>
     </javac>
     <jar destfile="${dist.dir}/${artifact.name}.jar">
+      <manifest>
+        <attribute name="Built-By" value="${user.name}"/>
+        <attribute name="Implementation-Vendor" value="Republic of Estonia Information System Authority"/>
+        <attribute name="Implementation-Title" value="Java BDoc/DigiDoc library"/>
+        <attribute name="Implementation-Version" value="${lib.version}"/>
+      </manifest>
+      <fileset dir="${build.dir}">
+        <exclude name="prototype/"/>
+        <exclude name="**/*Test.class"/>
+      </fileset>
+      <fileset dir=".">
+        <include name="conf/*.*"/>
+        <include name="keystore/*.*"/>
+      </fileset>
+    </jar>
+  </target>
+
+  <property name="JDK1.6.dir" location="C:/Program Files (x86)/Java/jdk1.6.0_45" />
+  <property name="javac1.6" location="${JDK1.6.dir}/bin/javac" />
+  <target name="compile16" depends="load.dependencies">
+    <mkdir dir="${build.dir}"/>
+    <copy todir="${build.dir}">
+      <fileset dir="resources">
+        <exclude name="logback.xml/"/>
+      </fileset>
+    </copy>
+
+    <javac executable="${javac1.6}" fork="yes" destdir="${build.dir}" includeantruntime="false" source="1.6" debug="on" target="1.6" encoding="UTF-8">
+      <src path="src"/>
+      <classpath refid="${classpath}"/>
+    </javac>
+
+    <jar destfile="${dist.dir}/${artifact.name}-jdk16.jar">
       <manifest>
         <attribute name="Built-By" value="${user.name}"/>
         <attribute name="Implementation-Vendor" value="Republic of Estonia Information System Authority"/>

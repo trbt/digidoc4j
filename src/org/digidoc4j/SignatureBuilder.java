@@ -292,7 +292,7 @@ public abstract class SignatureBuilder implements Serializable {
     try {
       logger.debug("Instantiating signature builder class " + builderClass.getName() + " for container type " + containerType);
       return builderClass.newInstance();
-    } catch (ReflectiveOperationException e) {
+    } catch (Exception e) {
       logger.error("Unable to instantiate custom signature builder class " + builderClass.getName() + " for type " + containerType);
       throw new TechnicalException("Unable to instantiate custom signature builder class " + builderClass.getName() + " for type " + containerType, e);
     }

@@ -22,7 +22,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -30,7 +29,6 @@ import static eu.europa.esig.dss.SignatureLevel.ASiC_E_BASELINE_B;
 import static eu.europa.esig.dss.SignatureLevel.ASiC_E_BASELINE_LT;
 import static eu.europa.esig.dss.SignatureLevel.ASiC_E_BASELINE_LTA;
 import static eu.europa.esig.dss.SignatureLevel.ASiC_S_BASELINE_B;
-import static java.nio.file.Files.deleteIfExists;
 
 import eu.europa.esig.dss.MimeType;
 import eu.europa.esig.dss.SignatureLevel;
@@ -101,7 +99,9 @@ public final class Helper {
    * @throws IOException if an IO Exception occurs
    */
   public static void deleteFile(String file) throws IOException {
-    deleteIfExists(Paths.get(file));
+    File f = new File(file);
+    if (f.exists())
+      f.delete();
   }
 
   /**

@@ -105,7 +105,7 @@ public class CustomContainerBuilder extends ContainerBuilder {
       logger.error("Unable to instantiate " + containerType + " container from class " + containerClass.getName() +
           " - The class must be public and should have a default constructor and a constructor with Configuration parameter available.");
       throw new TechnicalException("Unable to instantiate " + containerType + " container from class " + containerClass.getName(), e);
-    } catch (ReflectiveOperationException e) {
+    } catch (Exception e) {
       logger.error("Unable to instantiate " + containerType + " container from class " + containerClass.getName());
       throw new TechnicalException("Unable to instantiate " + containerType + " container from class " + containerClass.getName(), e);
     }

@@ -17,8 +17,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.apache.commons.io.IOUtils;
 import org.digidoc4j.exceptions.DigiDoc4JException;
@@ -196,14 +194,9 @@ public class DataFile implements Serializable {
     logger.debug("");
     long fileSize;
     if (document instanceof StreamDocument || document instanceof FileDocument) {
-      try {
-        fileSize = Files.size(Paths.get(document.getAbsolutePath()));
+        fileSize = (new File(document.getAbsolutePath())).length();
         logger.debug("Document size: " + fileSize);
         return fileSize;
-      } catch (IOException e) {
-        logger.error(e.getMessage());
-        throw new DigiDoc4JException(e);
-      }
     }
     fileSize = getBytes().length;
     logger.debug("File document size: " + fileSize);

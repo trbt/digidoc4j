@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -169,8 +167,8 @@ public class KeystoreGenerator {
   private void createKeystore(String keyStoreFilepath, String keyStorePassword) throws CertificateException, NoSuchAlgorithmException, IOException, KeyStoreException {
     KeyStore trustStore = KeyStore.getInstance(DEFAULT_KEYSTORE_TYPE);
     trustStore.load(null, keyStorePassword.toCharArray());
-    Path pathToKeystore = Paths.get(keyStoreFilepath);
-    pathToKeystore.getParent().toFile().mkdirs();
+    File pathToKeystore = new File(keyStoreFilepath);
+    pathToKeystore.getParentFile().mkdirs();
     OutputStream fos = new FileOutputStream(keyStoreFilepath);
     trustStore.store(fos, keyStorePassword.toCharArray());
     IOUtils.closeQuietly(fos);

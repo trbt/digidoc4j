@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * Contains information of filenames and mimetypes.
@@ -62,6 +62,7 @@ public final class ManifestEntry implements Serializable{
 
   @Override
   public int hashCode() {
-    return Objects.hash(fileName, mimeType);
+    Object[] fields = {fileName, mimeType};
+    return Arrays.hashCode(fields);
   }
 }

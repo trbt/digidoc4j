@@ -10,12 +10,11 @@
 
 package org.digidoc4j.impl.bdoc.xades;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.digidoc4j.Configuration;
@@ -96,7 +95,7 @@ public class XadesValidationReportGenerator implements Serializable {
 
   private InputStream getValidationPolicyAsStream() {
     String policyFile = configuration.getValidationPolicy();
-    if (Files.exists(Paths.get(policyFile))) {
+    if ((new File(policyFile)).exists()) {
       try {
         return new FileInputStream(policyFile);
       } catch (FileNotFoundException ignore) {

@@ -10,6 +10,8 @@
 
 package org.digidoc4j.impl.bdoc.asic;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -39,11 +41,58 @@ public class AsicFileContainerParser extends AsicContainerParser{
     }
   }
 
+  String getZipComment(ZipFile zipFile) {
+
+    String retStr = null;
+    try {
+      File file = new File(zipFile.getName());
+      int fileLen = (int)file.length();
+      FileInputStream in = new FileInputStream(file);
+      byte[] buffer = new byte[Math.min(fileLen, 8192)];
+      int len;
+      in.skip(fileLen - buffer.length);
+      if ((len = in.read(buffer)) > 0) {
+        byte[] magicDirEnd = {0x50, 0x4b, 0x05, 0x06};
+        int buffLen = Math.min(buffer.length, len);
+        for (int i = buffLen-magicDirEnd.length-22; i >= 0; i--) {
+          boolean isMagicStart = true;
+          for (int k=0; k < magicDirEnd.length; k++) {
+            if (buffer[i+k] != magicDirEnd[k]) {
+              isMagicStart = false;
+              break;
+            }
+          }
+          if (isMagicStart) {
+          // Magic Start found!
+            int commentLen = buffer[i+20] + buffer[i+21]*256;
+            int realLen = buffLen - i - 22;
+            System.out.println ("ZIP comment found at buffer position " + (i+22) + " with len="+commentLen+", good!");
+            if (commentLen != realLen) {
+              System.out.println ("WARNING! ZIP comment size mismatch: directory says len is "+
+                  commentLen+", but file ends after " + realLen + " bytes!");
+            }
+            retStr = new String (buffer, i+22, Math.min(commentLen, realLen));
+          }
+        }
+      }
+      in.close();
+
+      org.apache.commons.compress.archivers.zip.ZipFile ccZip = new org.apache.commons.compress.archivers.zip.ZipFile(zipFile.getName());
+
+    } catch (IOException e) {
+      logger.error("Error reading container from " + zipFile.getName() + " - " + e.getMessage());
+      throw new RuntimeException("Error reading container from " + zipFile.getName());
+    }
+
+    return retStr;
+
+  }
+
   @Override
   protected void parseContainer() {
     logger.debug("Parsing zip file");
     try {
-      String zipFileComment = zipFile.getComment();
+      String zipFileComment = getZipComment(zipFile);
       setZipFileComment(zipFileComment);
       parseZipFileManifest();
       Enumeration<? extends ZipEntry> entries = zipFile.entries();
@@ -52,7 +101,10 @@ public class AsicFileContainerParser extends AsicContainerParser{
         parseEntry(zipEntry);
       }
     } finally {
-      IOUtils.closeQuietly(zipFile);
+      try {
+        zipFile.close();
+      } catch (Exception ignore) {
+      }
     }
   }
 

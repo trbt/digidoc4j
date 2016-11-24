@@ -19,7 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+//import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
@@ -41,7 +41,8 @@ public class AsicContainerCreator {
 
   private static final Logger logger = LoggerFactory.getLogger(AsicContainerCreator.class);
   private final static String ZIP_ENTRY_MIMETYPE = "mimetype";
-  private static final Charset CHARSET = StandardCharsets.UTF_8;
+  //private static final Charset CHARSET = StandardCharsets.UTF_8;
+  private static final String CHARSET = "UTF-8";
   private ZipOutputStream zipOutputStream;
   private ByteArrayOutputStream outputStream;
   private String zipComment;
@@ -50,7 +51,7 @@ public class AsicContainerCreator {
     logger.debug("Starting to save bdoc zip container to " + containerPathToSave);
     try {
       FileOutputStream outputStream = new FileOutputStream(containerPathToSave);
-      zipOutputStream = new ZipOutputStream(new BufferedOutputStream(outputStream), CHARSET);
+      zipOutputStream = new ZipOutputStream(new BufferedOutputStream(outputStream));
     } catch (FileNotFoundException e) {
       logger.error("Unable to create BDoc ZIP container: " + e.getMessage());
       throw new TechnicalException("Unable to create BDoc ZIP container", e);
@@ -59,7 +60,7 @@ public class AsicContainerCreator {
 
   public AsicContainerCreator() {
     outputStream = new ByteArrayOutputStream();
-    zipOutputStream = new ZipOutputStream(new BufferedOutputStream(outputStream), CHARSET);
+    zipOutputStream = new ZipOutputStream(new BufferedOutputStream(outputStream));
   }
 
   public void finalizeZipFile() {

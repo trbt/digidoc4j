@@ -14,8 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
 import org.digidoc4j.Configuration;
@@ -125,7 +123,7 @@ public class TslLoader implements Serializable {
   private File getTslKeystoreFile() throws TslKeyStoreNotFoundException {
     try {
       String keystoreLocation = configuration.getTslKeyStoreLocation();
-      if (Files.exists(Paths.get(keystoreLocation))) {
+      if ((new File(keystoreLocation)).exists()) {
         return new File(keystoreLocation);
       }
       File tempFile = File.createTempFile("temp-tsl-keystore", ".jks");
